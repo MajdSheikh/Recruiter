@@ -28,6 +28,7 @@ public class HomeController {
     public String index(Model model) {
         model.addAttribute("newUser", new User());
         model.addAttribute("newLogin", new LoginUser());
+        
         return "index.jsp";
     }
     
