@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.axsos.logreg.models.Service;
 
+
+
 @Repository
 public interface ServiceRepo extends CrudRepository<Service,Long> {
 	
