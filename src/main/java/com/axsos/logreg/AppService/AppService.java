@@ -7,15 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import com.axsos.logreg.models.Company;
 import com.axsos.logreg.models.LoginUser;
 import com.axsos.logreg.models.User;
+import com.axsos.logreg.repository.CompanyRepo;
+import com.axsos.logreg.repository.ServiceRepo;
 import com.axsos.logreg.repository.UserRepository;
+
 
 @Service
 public class AppService {
     
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+    private ServiceRepo serviceRepo;
+    
+    @Autowired
+    private CompanyRepo companyRepo;
     
     public User register(User newUser, BindingResult result) {
         if(userRepo.findByEmail(newUser.getEmail()).isPresent()) {
@@ -64,5 +74,52 @@ public class AppService {
     	}
     	
     }
+    
+    
+    
+    
+//    public Service findServiceById(Long id) {
+//    	Optional<Service> s = serviceRepo.findById(id);
+//    	
+//    	if(s.isPresent()) {
+//    		return s.get();
+//    	} else {
+//    		return null;
+//    	}
+//    	
+//    }
+    
+    
+    public Company findCompanyById(Long id) {
+    	Optional<Company> c = companyRepo.findById(id);
+    	
+    	if(c.isPresent()) {
+    		return c.get();
+    	} else {
+    		return null;
+    	}
+    	
+    }
+    
+    
+    
+    
+//    public Service createServ(Service team) {
+//    	return serviceRepo.save(team);
+//    }
+    
+    public Company createcom(Company com) {
+    	return companyRepo.save(com);
+    }
+    
+    
+    public User createUser(User user) {
+    	return userRepo.save(user);
+    }
+    
+    
+    
+    
+    
     
 }
