@@ -28,10 +28,10 @@ public class Service {
     private Long id;
     
     @Size(min=1,max=10)
-    private Integer ContractorRating;
+    private Integer ContractorRating=5;
     
     @Size(min=1,max=10)
-    private Integer OwnerRating;
+    private Integer OwnerRating=5;
     
     @NotEmpty(message="Location is required!")
     @Size(min=2, max=30, message="Location must be between 3 and 30 characters")

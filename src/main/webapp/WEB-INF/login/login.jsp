@@ -60,7 +60,7 @@
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links color">
 					Don't have an account?
-					<div><a href="#" class="color">Sign Up</a></div>
+					<div><a href="/Regpage" class="color">Sign Up</a></div>
 				</div>
 				
 			</div>
