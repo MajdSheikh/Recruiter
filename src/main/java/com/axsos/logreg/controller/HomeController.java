@@ -34,7 +34,9 @@ public class HomeController {
     
     @Autowired
     private AppService userServ;
-	JavaMailSender javaMailSender;
+    
+    @Autowired
+	private JavaMailSender javaMailSender;
 	
     
     @GetMapping("/")
@@ -76,6 +78,8 @@ public class HomeController {
 
     }
     
+    
+    
     @GetMapping("/home")
     public String home(Model model, HttpSession session) {
         if (session.getAttribute("user_id") != null) {
@@ -89,8 +93,25 @@ public class HomeController {
         }
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @PostMapping("/send/Email/{id_owner}")
-public String sendEmail(@PathVariable("id_owner") Long idowner,@RequestParam("contracter")Long id2){
+     public String sendEmail(@PathVariable("id_owner") Long idowner,@RequestParam("contracter")Long id2){
         User thisUser = userServ.findUserById(idowner);
         User contUser = userServ.findUserById(id2);
 
