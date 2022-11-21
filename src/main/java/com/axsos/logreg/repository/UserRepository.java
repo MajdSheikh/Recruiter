@@ -9,7 +9,7 @@ import com.axsos.logreg.models.User;
     
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
-    
+//	User findByUsername(String username);
     Optional<User> findByEmail(String email);
     List<User> findAll();
     

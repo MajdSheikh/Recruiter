@@ -11,15 +11,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cafe Java</title>
+<title>Login Registration</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css"> <!-- change to match your file/naming structure -->
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+	<div class="row" >
+	<div class="col" >
     <form:form action="/register" method="post" modelAttribute="newUser">
         <div class="form-group">
             <label>User Name:</label>
-            <form:input path="userName" class="form-control" />
-            <form:errors path="userName" class="text-danger" />
+            <form:input path="firstName" class="form-control" />
+            <form:errors path="firstName" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label>User Name:</label>
+            <form:input path="lastName" class="form-control" />
+            <form:errors path="lastName" class="text-danger" />
         </div>
         <div class="form-group">
             <label>Email:</label>
@@ -38,7 +48,9 @@
         </div>
         <input type="submit" value="Register" class="btn btn-primary" />
     </form:form>
+	</div>
 
+	<div class="col">
     <form:form action="/login" method="post" modelAttribute="newLogin">
         <div class="form-group">
             <label>Email:</label>
@@ -52,6 +64,10 @@
         </div>
         <input type="submit" value="Login" class="btn btn-success" />
     </form:form>
+	</div>
+	
+	</div>
+	
 
 </body>
 </html>

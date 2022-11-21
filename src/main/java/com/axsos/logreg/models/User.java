@@ -51,6 +51,13 @@ public class User {
     @Size(min=9,max=9, message="your National Id does not seem to be correct")
     private String nationalId;
     
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "users_roles", 
+        joinColumns = @JoinColumn(name = "user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
+    
     @Transient
     @NotEmpty(message="Confirm Password is required!")
     @Size(min=8, max=128, message="Confirm Password must be between 8 and 128 characters")
@@ -166,6 +173,12 @@ public class User {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
     
     // TODO - Don't forget to generate getters and setters
