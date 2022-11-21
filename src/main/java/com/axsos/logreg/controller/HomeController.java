@@ -1,6 +1,7 @@
 package com.axsos.logreg.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -99,14 +100,18 @@ public class HomeController {
         Long user_id = (Long) session.getAttribute("user_id");
         User thisUser = userServ.findUserById(user_id);
         model.addAttribute("thisUser", thisUser);
-        return "home.jsp";
+        
+        List<Service> service =userServ.allService();
+       
+        model.addAttribute("allServices", service);   
+        return "/login/jobsDashboard.jsp";
     }
         else {
             return "redirect:/";
         }
     }
     
-    @GetMapping("/new/service")
+    @GetMapping("/projects/new")
     public String newservice(Model model) {
 
         Service service =new Service();
@@ -142,11 +147,55 @@ public class HomeController {
         return "showservice.jsp";
     }
     
+    @GetMapping("/services/{id}/edit")
+    public String editservice(Model model) {
+        
+        return "/login/editJob.jsp";
+    }
     
     
     
+    @GetMapping("/services/{id}/apply")
+    public String applyforservice( @PathVariable("id") Long id, Model model, HttpSession session) {
+    	
+    	   if (session.getAttribute("user_id") != null) {
+    	        Long user_id = (Long) session.getAttribute("user_id");
+    	        User thisUser = userServ.findUserById(user_id);
+    	        
+    	
+        userServ.joinService(userServ.findService(id),thisUser);
+        
+    	
+    	   }
+    	   
+    	      return "redirect:/home";
+
+  }
+    @GetMapping("/services/{id}/unjoin")
+    public String unjoinservice( @PathVariable("id") Long id, Model model, HttpSession session) {
+    	
+    	   if (session.getAttribute("user_id") != null) {
+    	        Long user_id = (Long) session.getAttribute("user_id");
+    	        User thisUser = userServ.findUserById(user_id);
+    	        
+    	
+        userServ.unjoinService(userServ.findService(id),thisUser);
+        
+    	
+    	   }
+    	   
+    	      return "redirect:/home";
+
+  }
     
     
+    @GetMapping("/team")
+    public String teams(Model model) {
+    	
+    	
+        model.addAttribute("services", userServ.allService());
+        return "showservice.jsp";
+    }
     
     
     

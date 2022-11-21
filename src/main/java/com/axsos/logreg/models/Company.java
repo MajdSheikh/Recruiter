@@ -49,7 +49,7 @@ public class Company {
         inverseJoinColumns = @JoinColumn(name = "user_id"),
         joinColumns = @JoinColumn(name = "company_id") 
     )
-    private List<User> players;
+    private List<User> employees;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
@@ -57,6 +57,43 @@ public class Company {
     
     
     
-    @OneToMany(mappedBy="company", fetch = FetchType.LAZY)
+    public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	public List<User> getEmployees() {
+		return employees;
+	}
+	public void setEmployees(List<User> employees) {
+		this.employees = employees;
+	}
+	public User getContractor() {
+		return contractor;
+	}
+	public void setContractor(User contractor) {
+		this.contractor = contractor;
+	}
+	public List<Service> getServices() {
+		return services;
+	}
+	public void setServices(List<Service> services) {
+		this.services = services;
+	}
+
+	@OneToMany(mappedBy="company", fetch = FetchType.LAZY)
     private List<Service> services;
 }
