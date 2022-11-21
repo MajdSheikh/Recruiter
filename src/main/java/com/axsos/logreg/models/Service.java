@@ -28,17 +28,9 @@ public class Service {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-<<<<<<< Updated upstream
-    @Size(min=1,max=10)
-    private Integer ContractorRating=5;
-    
-    @Size(min=1,max=10)
-    private Integer OwnerRating=5;
-=======
     @Range(min=1,max=10)
     private Integer ContractorRating=5;
     
->>>>>>> Stashed changes
     
     @Range(min=1,max=10)
     private Integer OwnerRating=5;
