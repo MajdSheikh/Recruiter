@@ -1,5 +1,6 @@
 package com.axsos.logreg.AppService;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -119,7 +120,11 @@ public class AppService {
     
     
     
+    public com.axsos.logreg.models.Service createService(com.axsos.logreg.models.Service service) {
+    	return serviceRepo.save(service);
+    }
     
-    
-    
+    public List<com.axsos.logreg.models.Service> allService() {
+    	return serviceRepo.findAll();
+    }
 }

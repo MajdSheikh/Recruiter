@@ -17,6 +17,9 @@ public interface ServiceRepo extends CrudRepository<Service,Long> {
 	Optional<Service> findById(Long id);
 	
 	List<Service> findAll();
+	
+	
+//	List<service> findBycomanyIsEmpty(Long id);
 
 
 }

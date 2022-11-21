@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.axsos.logreg.AppService.AppService;
 import com.axsos.logreg.models.LoginUser;
+import com.axsos.logreg.models.Service;
 import com.axsos.logreg.models.User;
 
 //    Hello Ali
@@ -41,11 +42,23 @@ public class HomeController {
     
     @GetMapping("/")
     public String index(Model model) {
+         return "base.jsp";
+    }
+    @GetMapping("/loginpage")
+    public String login(Model model) {
         model.addAttribute("newUser", new User());
         model.addAttribute("newLogin", new LoginUser());
         
-        return "index.jsp";
+        return "/login/login.jsp";
     }
+    @GetMapping("/Regpage")
+    public String register(Model model) {
+        model.addAttribute("newUser", new User());
+        model.addAttribute("newLogin", new LoginUser());
+        
+        return "/login/register.jsp";
+    }
+    	
     
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("newUser") User newUser, 
@@ -53,7 +66,7 @@ public class HomeController {
         userServ.register(newUser, result);
         if(result.hasErrors()) {
             model.addAttribute("newLogin", new LoginUser());
-            return "index.jsp";
+            return "login/register.jsp";
         }
         session.setAttribute("user_id", newUser.getId());
         return "redirect:/home";
@@ -65,7 +78,7 @@ public class HomeController {
         User user = userServ.login(newLogin, result);
         if(result.hasErrors()) {
             model.addAttribute("newUser", new User());
-            return "index.jsp";
+            return "/login/login.jsp";
         }
         session.setAttribute("user_id", user.getId());
         return "redirect:/home";
@@ -91,6 +104,40 @@ public class HomeController {
         else {
             return "redirect:/";
         }
+    }
+    
+    @GetMapping("/new/service")
+    public String newservice(Model model) {
+
+        Service service =new Service();
+        model.addAttribute("service", service);
+        
+        
+        return "createservice.jsp";
+   
+    }
+    
+    
+    
+    @PostMapping("/new/service/add")
+    public String addservice(@Valid @ModelAttribute("service") Service service, 
+            BindingResult result, Model model, HttpSession session) {
+        if(result.hasErrors()) {
+            model.addAttribute("service", new Service());
+            return "createservice.jsp";
+        }
+        Long user_id = (Long) session.getAttribute("user_id");
+        User thisUser = userServ.findUserById(user_id);
+        service.setOwner(thisUser);
+        userServ.createService(service);
+        return "redirect:/home";
+    }
+    
+    @GetMapping("/show/service")
+    public String showservice(Model model) {
+    
+        model.addAttribute("services", userServ.allService());
+        return "showservice.jsp";
     }
     
     
