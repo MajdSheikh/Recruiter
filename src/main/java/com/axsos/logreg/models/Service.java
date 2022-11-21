@@ -14,8 +14,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+	import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -27,13 +28,32 @@ public class Service {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+<<<<<<< Updated upstream
     @Size(min=1,max=10)
     private Integer ContractorRating=5;
     
     @Size(min=1,max=10)
     private Integer OwnerRating=5;
+=======
+    @Range(min=1,max=10)
+    private Integer ContractorRating=5;
     
-    @NotEmpty(message="Location is required!")
+>>>>>>> Stashed changes
+    
+    @Range(min=1,max=10)
+    private Integer OwnerRating=5;
+    
+    @NotEmpty(message="Specialization is required!")
+    @Size(min=2, max=30, message="specialization must be between 3 and 30 characters")
+    private String specialization;
+    
+    public String getSpecialization() {
+		return specialization;
+	}
+	public void setSpecialization(String specialization) {
+		this.specialization = specialization;
+	}
+	@NotEmpty(message="Location is required!")
     @Size(min=2, max=30, message="Location must be between 3 and 30 characters")
     private String location;
     

@@ -121,6 +121,8 @@ public class AppService {
     
     
     public com.axsos.logreg.models.Service createService(com.axsos.logreg.models.Service service) {
+    	service.setContractorRating(5);
+    	service.setOwnerRating(5);
     	return serviceRepo.save(service);
     }
     

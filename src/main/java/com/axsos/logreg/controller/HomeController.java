@@ -113,13 +113,13 @@ public class HomeController {
         model.addAttribute("service", service);
         
         
-        return "createservice.jsp";
+        return "/login/createJob.jsp";
    
     }
     
     
     
-    @PostMapping("/new/service/add")
+    @PostMapping("/jobs/create")
     public String addservice(@Valid @ModelAttribute("service") Service service, 
             BindingResult result, Model model, HttpSession session) {
         if(result.hasErrors()) {
@@ -132,6 +132,8 @@ public class HomeController {
         userServ.createService(service);
         return "redirect:/home";
     }
+    
+    
     
     @GetMapping("/show/service")
     public String showservice(Model model) {
