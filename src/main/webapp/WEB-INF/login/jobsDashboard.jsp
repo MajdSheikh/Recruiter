@@ -20,7 +20,7 @@
 <div>
 <a href="/" class="navbar-brand fs-6">About us</a>
 <a href="/projects/new" class="navbar-brand fs-6">Are you hiring?</a>
-<a href="/register" class="navbar-brand fs-6">Are you looking for a job?</a>
+<a href="/team" class="navbar-brand fs-6">Are you looking for a job?</a>
 <a href="/jobs/dashboard" class="navbar-brand fs-6">Available jobs</a>
 <a href="/create/company" class="navbar-brand fs-6">Create Company</a>
 
@@ -56,7 +56,9 @@
 	            </thead>
 	            <tbody>
 	            	<c:forEach var="service" items="${allServices}">
-	            	
+	            	                                                      
+	            	       <c:if test="${service.status==true}">
+	    
 		                <tr>
      			      		<td scope="row"><a href="/owner/dash/${service.owner.id}"><c:out value="${service.owner.firstName}"/></a></td>                	
 		                	<td scope="row"><c:out value="${service.location}"/></td>                	
@@ -65,10 +67,11 @@
 		                    <td><c:out value="${service.finishingDate}"/></td> 
 		                    <td><c:out value="${service.specialization}"/></td>
 		                    <c:choose>
-		                    <c:when test="${user_id != service.owner.id || service.owner.id==null }">
+		                    <c:when test="${user.id == service.owner.id }">
 		                    <td><a href="/services/${service.id}/edit">edit your post</a></td>
 		                    </c:when>
-		                     <c:when test="${service.company==null && user_id == service.owner.id }">
+		                    
+		                     <c:when test="${service.company==null &&  companies.size()>0}">
 		                     <td>
 		                     <form action="/services/${service.id}/apply" method="post">
 		                     <select name="company">
@@ -81,14 +84,14 @@
 		                    </form>
 		                    </td>
 		                    </c:when>
-		                     <c:otherwise>
+		                     <c:when test="${service.company!=null }">
 		                    
 		               		<td> Already company reserved <a href="/services/${service.id}/unjoin">dismiss</a></td>
 		                    
-		                    </c:otherwise>
-		                    </c:choose>
+ 							</c:when>
+ 		                    </c:choose>
 		                </tr>
-		                
+		                </c:if>
 	                </c:forEach>
 	            </tbody>
 	        </table>
