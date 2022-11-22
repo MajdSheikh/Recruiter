@@ -48,6 +48,10 @@ public class Service {
 	@NotEmpty(message="Location is required!")
     @Size(min=2, max=30, message="Location must be between 3 and 30 characters")
     private String location;
+	
+	
+	
+    private boolean status=true;
     
     @NotEmpty(message="Description is required!")
     @Size(max=300, message="Description must be less than 300 characters")
@@ -63,6 +67,12 @@ public class Service {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createdAt;
 	
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date updatedAt;
 	

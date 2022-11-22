@@ -178,6 +178,37 @@ public class AppService {
     public void deletecompany(Company company){
     	companyRepo.delete(company);
     }
+    public void deleteService(com.axsos.logreg.models.Service ser){
+    	ser.setStatus(false);
+    	serviceRepo.save(ser);
+    }
+    public com.axsos.logreg.models.Service rateService(com.axsos.logreg.models.Service ser){
+
+    	return serviceRepo.save(ser);
+    	
+    }
+    
+    public Company addEmployeetocompany(Company company,User user){
+    	List<User> us = company.getEmployees();
+    	if(us.contains(user)){
+    		return null;
+    	}
+    	us.add(user);
+    	company.setEmployees(us);
+    	return companyRepo.save(company);
+    }
+    public Company getoutEmployeetocompany(Company company,User user){
+    	List<User> us = company.getEmployees();
+    	if(us.contains(user)){
+    		us.remove(user);
+    		
+    	}
+    
+    	company.setEmployees(us);
+    	return companyRepo.save(company);
+    }
+    
+    
     
     
 }

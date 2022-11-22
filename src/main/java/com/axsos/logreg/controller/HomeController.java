@@ -99,8 +99,8 @@ public class HomeController {
         if (session.getAttribute("user_id") != null) {
         Long user_id = (Long) session.getAttribute("user_id");
         User thisUser = userServ.findUserById(user_id);
-        model.addAttribute("thisUser", thisUser);
-        model.addAttribute("companies", userServ.allcompany());
+        model.addAttribute("user", thisUser);
+        model.addAttribute("companies", thisUser.getContractorcompanies());
 
         
         List<Service> service =userServ.allService();
@@ -212,13 +212,60 @@ public class HomeController {
   }
     
     
+    
+    /// Adding Employee
+    
     @GetMapping("/team")
-    public String teams(Model model) {
+    public String teams(Model model, HttpSession session) {
     	
-    	
-        model.addAttribute("services", userServ.allService());
-        return "showservice.jsp";
+        model.addAttribute("companies", userServ.allcompany());
+
+    	  if (session.getAttribute("user_id") != null) {
+  	        Long user_id = (Long) session.getAttribute("user_id");
+  	        User thisUser = userServ.findUserById(user_id);
+  	        
+        model.addAttribute("companies", userServ.allcompany());
+        model.addAttribute("user", thisUser);
+
+        
+    	  }
+        return "/login/viewCompany.jsp";
     }
+    @PostMapping("/company/add")
+    public String addEployees(Model model, HttpSession session,@RequestParam("company")Long id ) {
+    	
+
+    	  if (session.getAttribute("user_id") != null) {
+    		  
+  	        Long user_id = (Long) session.getAttribute("user_id");
+  	        User thisUser = userServ.findUserById(user_id);
+  	        
+  	        Company com = userServ.findCompanyById(id);
+  	        userServ.addEmployeetocompany(com, thisUser);
+  	        
+        
+    	  }
+        return "redirect:/team";
+    }
+    
+    @GetMapping("/getout/{id}")
+    public String getoutofcompany(@PathVariable("id") Long id,Model model, HttpSession session) {
+    	
+        model.addAttribute("companies", userServ.allcompany());
+
+    	  if (session.getAttribute("user_id") != null) {
+  	        Long user_id = (Long) session.getAttribute("user_id");
+  	        User thisUser = userServ.findUserById(user_id);
+  	      Company com = userServ.findCompanyById(id);
+	        userServ.getoutEmployeetocompany(com, thisUser);
+        
+    	  }
+          return "redirect:/team";
+    }
+    
+    
+    
+    //home
     
     @GetMapping("/home")
     public String ownerdashboard(Model model, HttpSession session) {
@@ -229,7 +276,7 @@ public class HomeController {
     	        model.addAttribute("home",1);
 
     	        model.addAttribute("user",thisUser);
-
+    	        
     	        model.addAttribute("ownerServices", thisUser.getServices());
     	        return "/login/ownerDashboard.jsp";
     	    }
@@ -309,6 +356,72 @@ public class HomeController {
         return "redirect:/create/company";
 
     }
+    @GetMapping("/service/delete/{id}")
+    public String finishService(@PathVariable("id") Long id) {
+    	
+    	Service ser =userServ.findService(id);
+    	userServ.deleteService(ser);
+        return "redirect:/rating/"+id;
+
+    }
+    @GetMapping("/rating/{id}")
+    public String rating(@PathVariable("id") Long id,Model model) {
+    	
+    	model.addAttribute("service", userServ.findService(id));
+        return "/login/contractorRating.jsp";
+
+    }
+    @PostMapping("/job/rating/{id}")
+    public String rate(@RequestParam("rate")Integer rate ,@PathVariable("id") Long id,Model model) {
+    	 Service ser = userServ.findService(id);
+    	 ser.setOwnerRating(rate);
+    	 userServ.rateService(ser);
+         return "redirect:/home";
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    @GetMapping("/company/team/add")
+    public String addingtoTeam(Model model) {
+    	
+        return "/login/addteam.jsp";
+
+    }
+    @GetMapping("/company/team/{id}")
+    public String addingintoTeam(@RequestParam("user")Long id2,@PathVariable("id") Long id,Model model) {
+    	
+//    	userServ.addToteam();
+        return "/login/addteam.jsp";
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

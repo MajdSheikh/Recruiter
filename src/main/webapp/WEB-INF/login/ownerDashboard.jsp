@@ -21,7 +21,7 @@
 <div>
 <a href="/" class="navbar-brand fs-6">About us</a>
 <a href="/projects/new" class="navbar-brand fs-6">Are you hiring?</a>
-<a href="/register" class="navbar-brand fs-6">Are you looking for a job?</a>
+<a href="/team" class="navbar-brand fs-6">Are you looking for a job?</a>
 <a href="/jobs/dashboard" class="navbar-brand fs-6">Available jobs</a>
 <a href="/create/company" class="navbar-brand fs-6">Create Company</a>
 
@@ -61,12 +61,23 @@
                     <p>starting Date<c:out value="${service.startingDate}"/></p>
                     <p>Finishing Date<c:out value="${service.finishingDate}"/></p>
                     <p>Specialization<c:out value="${service.specialization}"/></p><p>
+                    <p>Rating : <c:out value="${service.getOwnerRating()}"/></p><p>
+                    
                                         <footer class="blockquote-footer pt-4 mt-4 border-top">
-                                        <c:if test="${user.id == service.owner.id}">
+                                        <c:if test="${user.id == service.owner.id && service.status==true}">
+                                                       
                                         
                         <cite title="Source Title"><a href="/services/${service.id}/edit">edit your post</a></cite>
-                        </c:if>
+                        <cite title="Source Title"><a href="/service/delete/${service.id}">Finish</a></cite>
+                                     =
                         
+                       
+                        </c:if>
+                                                                <c:if test="${ user.id == service.company.contractor.id ||user.id == service.owner.id && service.status==false}">
+                                                <cite title="Source Title"><a href="/rating/${service.id}">Rate the post</a></cite>
+                        
+                        
+                        </c:if>
                     </footer>
                 </blockquote><!-- END -->
 
