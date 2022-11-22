@@ -125,6 +125,16 @@ public class AppService {
     	service.setOwnerRating(5);
     	return serviceRepo.save(service);
     }
+    public com.axsos.logreg.models.Service editService(com.axsos.logreg.models.Service service,Long id) {
+    	com.axsos.logreg.models.Service ser = serviceRepo.findById(id).get();
+    	ser.setDescription(service.getDescription());
+    	ser.setLocation(service.getLocation());
+    	ser.setFinishingDate(service.getFinishingDate());
+    	ser.setStartingDate(service.getStartingDate());
+    	ser.setSpecialization(service.getSpecialization());
+    	
+    	return serviceRepo.save(ser);
+    }
     
     public com.axsos.logreg.models.Service findService(Long id) {
     	

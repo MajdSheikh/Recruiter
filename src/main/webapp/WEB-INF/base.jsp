@@ -30,6 +30,8 @@
                         <li class="nav-item"><a class="nav-link" href="#">Looking For A Job?</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Are You Hiring?</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/loginpage">Sign in</a></li>
+                        
                     </ul>
                 </div>
             </div>

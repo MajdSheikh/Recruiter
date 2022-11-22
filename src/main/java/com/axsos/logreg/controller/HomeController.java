@@ -148,12 +148,17 @@ public class HomeController {
     }
     
     @GetMapping("/services/{id}/edit")
-    public String editservice(Model model) {
-        
+    public String editservice(@PathVariable("id") Long id,Model model,@ModelAttribute("service") Service service) {
+        Service serv = userServ.findService(id);
+        model.addAttribute("service", serv);
         return "/login/editJob.jsp";
     }
-    
-    
+    @PostMapping("/jobs/{id}/edit")
+    public String editjob(@PathVariable("id") Long id,Model model,@Valid @ModelAttribute("service") Service service) {
+       
+    	userServ.editService(service, id);
+        return "redirect:/home";
+    }
     
     @GetMapping("/services/{id}/apply")
     public String applyforservice( @PathVariable("id") Long id, Model model, HttpSession session) {
@@ -163,7 +168,16 @@ public class HomeController {
     	        User thisUser = userServ.findUserById(user_id);
     	        
     	
-        userServ.joinService(userServ.findService(id),thisUser);
+        
+        User ser = userServ.joinService(userServ.findService(id),thisUser).getOwner();
+
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setFrom("aazzoqa@gmail.com");
+		sm.setTo(ser.getEmail());
+		sm.setSubject("Welcome to Java SpringBoot Application");
+		sm.setText("Welcome Mr. : "+thisUser.getFirstName() +"\n\n   .");
+		javaMailSender.send(sm);
+		 System.out.println(generateResponse("Email Sent to the mail "+thisUser.getEmail(), HttpStatus.OK, thisUser)); 
         
     	
     	   }
