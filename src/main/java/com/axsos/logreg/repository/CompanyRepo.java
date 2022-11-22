@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.axsos.logreg.models.Company;
+import com.axsos.logreg.models.User;
 
 
 @Repository
@@ -17,5 +18,7 @@ public interface CompanyRepo extends CrudRepository<Company,Long> {
 	Optional<Company> findById(Long id);
 	
     List<Company> findAll();
+    
+    List<User> findByEmployees(Company company);
 
 }

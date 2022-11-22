@@ -1,0 +1,18 @@
+.mar {
+	margin-left: 120px;
+
+	color:#FFC312 !important;
+}
+
+.rightbutton {
+	float: right;
+	margin-bottom: 40px;
+	margin-right: 50px;
+}
+
+.space {
+	text-align: center;
+	margin-top: 10px;
+	font-family: "Times New Roman", Times, serif;
+}
+

@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 //package  com.axsos.logreg.config;
 //
 //import org.springframework.context.annotation.Bean;
@@ -25,7 +24,6 @@
 //		return http.build();
 //	}
 //}
-=======
 // package  com.axsos.logreg.config;
 
 // import org.springframework.context.annotation.Bean;
@@ -52,4 +50,3 @@
 // 		return http.build();
 // 	}
 // }
->>>>>>> Stashed changes
