@@ -19,13 +19,16 @@
   <a class="navbar-brand mar">FreeHire</a>
 <div>
 <a href="/" class="navbar-brand fs-6">About us</a>
-<a href="/create"class="navbar-brand fs-6">Are you hiring?</a>
+<a href="/projects/new" class="navbar-brand fs-6">Are you hiring?</a>
 <a href="/register" class="navbar-brand fs-6">Are you looking for a job?</a>
 <a href="/jobs/dashboard" class="navbar-brand fs-6">Available jobs</a>
+<a href="/create/company" class="navbar-brand fs-6">Create Company</a>
+
+<a href="/logout" class="navbar-brand fs-6">logout</a>
+
 
 </div>
 </nav>
-
 
 
 
@@ -34,13 +37,15 @@
 <h3>List of available jobs</h3>
 </div>
 <div class="rightbutton">
-<a href="projects/new" type="button" class="btn btn-outline-primary">Add a new job opening</a>
+<a href="/home" type="button" class="btn btn-outline-primary">Back</a>
+
 </div>
 
 <div class="marg">
 <table class="table table-striped container">
 	            <thead>
 	                <tr>
+	                	<th scope="col">Name of Posted</th>
 	                    <th scope="col">location</th>
 	                    <th scope="col" >Description</th>
 	                    <th scope="col" >Starting Date:</th>
@@ -53,21 +58,32 @@
 	            	<c:forEach var="service" items="${allServices}">
 	            	
 		                <tr>
+     			      		<td scope="row"><a href="/owner/dash/${service.owner.id}"><c:out value="${service.owner.firstName}"/></a></td>                	
 		                	<td scope="row"><c:out value="${service.location}"/></td>                	
 		                    <td><c:out value="${service.description}"/></td>
 		                    <td><c:out value="${service.startingDate}"/></td> 
 		                    <td><c:out value="${service.finishingDate}"/></td> 
 		                    <td><c:out value="${service.specialization}"/></td>
 		                    <c:choose>
-		                    <c:when test="${user_id == service.owner.id || service.owner.id==null }">
+		                    <c:when test="${user_id != service.owner.id || service.owner.id==null }">
 		                    <td><a href="/services/${service.id}/edit">edit your post</a></td>
 		                    </c:when>
-		                     <c:when test="${service.company==null }">
-		                    <td><a href="services/${service.id}/apply">Apply</a></td>
+		                     <c:when test="${service.company==null && user_id == service.owner.id }">
+		                     <td>
+		                     <form action="/services/${service.id}/apply" method="post">
+		                     <select name="company">
+		                     <c:forEach var="company" items="${companies}">
+		                    <option value="${company.id}"> <c:out value="${company.title }"></c:out></option>
+		                    </c:forEach>
+		                    </select>
+		                    	        <input  type="submit" value="Submit" type="button" class="btn btn-primary btn-lg btn-block">
+		                    
+		                    </form>
+		                    </td>
 		                    </c:when>
 		                     <c:otherwise>
 		                    
-		               		<td><a href="services/${service.id}/unjoin">dismiss</a></td>
+		               		<td> Already company reserved <a href="/services/${service.id}/unjoin">dismiss</a></td>
 		                    
 		                    </c:otherwise>
 		                    </c:choose>
