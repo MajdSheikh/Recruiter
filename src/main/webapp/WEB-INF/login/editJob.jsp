@@ -15,8 +15,8 @@
 
 <h1>Edit your job post</h1>
 
-	    <form:form action="/jobs}/edit" method="POST" modelAttribute="service" class="container">
-	    	 <input type="hidden" name="_method" value="put">
+	    <form:form action="/jobs/${service.id}/edit" method="post" modelAttribute="service" class="container">
+	    	 <input type="hidden" name="_method" value="post">
 	    	 
 	        <div class="form-group col-md-6 break">
 	            <form:label path="location"><strong>location</strong></form:label>

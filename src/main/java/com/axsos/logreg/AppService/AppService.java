@@ -121,8 +121,58 @@ public class AppService {
     
     
     public com.axsos.logreg.models.Service createService(com.axsos.logreg.models.Service service) {
+    	service.setContractorRating(5);
+    	service.setOwnerRating(5);
     	return serviceRepo.save(service);
     }
+    public com.axsos.logreg.models.Service editService(com.axsos.logreg.models.Service service,Long id) {
+    	com.axsos.logreg.models.Service ser = serviceRepo.findById(id).get();
+    	ser.setDescription(service.getDescription());
+    	ser.setLocation(service.getLocation());
+    	ser.setFinishingDate(service.getFinishingDate());
+    	ser.setStartingDate(service.getStartingDate());
+    	ser.setSpecialization(service.getSpecialization());
+    	
+    	return serviceRepo.save(ser);
+    }
+    
+    public com.axsos.logreg.models.Service findService(Long id) {
+    	
+    	return serviceRepo.findById(id).get();
+    }
+  public com.axsos.logreg.models.Service joinService(com.axsos.logreg.models.Service service,User user) {
+    	
+	  List<Company> listcom = user.getContractorcompanies();
+	  Company co = new Company();
+	  co.setContractor(user);
+	 
+	  listcom.add(companyRepo.save(co));
+	  user.setContractorcompanies(listcom);
+	  user =userRepo.save(user);
+	  service.setCompany(user.getContractorcompanies().get(0));
+	  
+    	return serviceRepo.save(service);
+    }
+  public com.axsos.logreg.models.Service unjoinService(com.axsos.logreg.models.Service service,User user) {
+  	
+//	  List<Company> listcom = user.getContractorcompanies();
+//	  Company co = new Company();
+//	  co.setContractor(user);
+//	 
+//	  listcom.add(companyRepo.save(co));
+//	  user.setContractorcompanies(listcom);
+//	  user =userRepo.save(user);
+	  	service.setCompany(null);
+	  
+	  
+    	return serviceRepo.save(service);
+    }
+  
+  public List<User> allemployees(Company co){
+	  return companyRepo.findByEmployees(co);
+  }
+    
+    
     
     public List<com.axsos.logreg.models.Service> allService() {
     	return serviceRepo.findAll();

@@ -1,6 +1,7 @@
 package com.axsos.logreg.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -99,27 +100,31 @@ public class HomeController {
         Long user_id = (Long) session.getAttribute("user_id");
         User thisUser = userServ.findUserById(user_id);
         model.addAttribute("thisUser", thisUser);
-        return "home.jsp";
+        
+        List<Service> service =userServ.allService();
+       
+        model.addAttribute("allServices", service);   
+        return "/login/jobsDashboard.jsp";
     }
         else {
             return "redirect:/";
         }
     }
     
-    @GetMapping("/new/service")
+    @GetMapping("/projects/new")
     public String newservice(Model model) {
 
         Service service =new Service();
         model.addAttribute("service", service);
         
         
-        return "createservice.jsp";
+        return "/login/createJob.jsp";
    
     }
     
     
     
-    @PostMapping("/new/service/add")
+    @PostMapping("/jobs/create")
     public String addservice(@Valid @ModelAttribute("service") Service service, 
             BindingResult result, Model model, HttpSession session) {
         if(result.hasErrors()) {
@@ -133,6 +138,8 @@ public class HomeController {
         return "redirect:/home";
     }
     
+    
+    
     @GetMapping("/show/service")
     public String showservice(Model model) {
     
@@ -140,11 +147,69 @@ public class HomeController {
         return "showservice.jsp";
     }
     
+    @GetMapping("/services/{id}/edit")
+    public String editservice(@PathVariable("id") Long id,Model model,@ModelAttribute("service") Service service) {
+        Service serv = userServ.findService(id);
+        model.addAttribute("service", serv);
+        return "/login/editJob.jsp";
+    }
+    @PostMapping("/jobs/{id}/edit")
+    public String editjob(@PathVariable("id") Long id,Model model,@Valid @ModelAttribute("service") Service service) {
+       
+    	userServ.editService(service, id);
+        return "redirect:/home";
+    }
+    
+    @GetMapping("/services/{id}/apply")
+    public String applyforservice( @PathVariable("id") Long id, Model model, HttpSession session) {
+    	
+    	   if (session.getAttribute("user_id") != null) {
+    	        Long user_id = (Long) session.getAttribute("user_id");
+    	        User thisUser = userServ.findUserById(user_id);
+    	        
+    	
+        
+        User ser = userServ.joinService(userServ.findService(id),thisUser).getOwner();
+
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setFrom("aazzoqa@gmail.com");
+		sm.setTo(ser.getEmail());
+		sm.setSubject("Welcome to Java SpringBoot Application");
+		sm.setText("Welcome Mr. : "+thisUser.getFirstName() +"\n\n   .");
+		javaMailSender.send(sm);
+		 System.out.println(generateResponse("Email Sent to the mail "+thisUser.getEmail(), HttpStatus.OK, thisUser)); 
+        
+    	
+    	   }
+    	   
+    	      return "redirect:/home";
+
+  }
+    @GetMapping("/services/{id}/unjoin")
+    public String unjoinservice( @PathVariable("id") Long id, Model model, HttpSession session) {
+    	
+    	   if (session.getAttribute("user_id") != null) {
+    	        Long user_id = (Long) session.getAttribute("user_id");
+    	        User thisUser = userServ.findUserById(user_id);
+    	        
+    	
+        userServ.unjoinService(userServ.findService(id),thisUser);
+        
+    	
+    	   }
+    	   
+    	      return "redirect:/home";
+
+  }
     
     
-    
-    
-    
+    @GetMapping("/team")
+    public String teams(Model model) {
+    	
+    	
+        model.addAttribute("services", userServ.allService());
+        return "showservice.jsp";
+    }
     
     
     
