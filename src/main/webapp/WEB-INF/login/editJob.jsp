@@ -12,6 +12,22 @@
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand mar">FreeHire</a>
+<div>
+<a href="/" class="navbar-brand fs-6">About us</a>
+<a href="/create"class="navbar-brand fs-6">Are you hiring?</a>
+<a href="/register" class="navbar-brand fs-6">Are you looking for a job?</a>
+<a href="/jobs/dashboard" class="navbar-brand fs-6">Available jobs</a>
+<a href="/create/company" class="navbar-brand fs-6">Create Company</a>
+
+<a href="/logout" class="navbar-brand fs-6">logout</a>
+
+</div>
+</nav>
+
+<a href="/home" type="button" class="btn btn-outline-primary">Back</a>
+
 
 <h1>Edit your job post</h1>
 

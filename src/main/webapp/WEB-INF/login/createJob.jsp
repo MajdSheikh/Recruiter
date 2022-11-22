@@ -13,6 +13,21 @@
 </head>
 <body>
 
+
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand mar">FreeHire</a>
+<div>
+<a href="/" class="navbar-brand fs-6">About us</a>
+<a href="/create"class="navbar-brand fs-6">Are you hiring?</a>
+<a href="/register" class="navbar-brand fs-6">Are you looking for a job?</a>
+<a href="/jobs/dashboard" class="navbar-brand fs-6">Available jobs</a>
+<a href="/logout" class="navbar-brand fs-6">logout</a>
+
+</div>
+</nav>
+<a href="/home" type="button" class="btn btn-outline-primary">Back</a>
+
+
 <h1>Create a job post</h1>
 
 	    <form:form action="/jobs/create" method="POST" modelAttribute="service" class="container">
